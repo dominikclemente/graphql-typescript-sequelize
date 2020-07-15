@@ -1,0 +1,47 @@
+version: '3'
+
+services:
+  app:
+    build:
+      dockerfile: docker/Dockerfile
+      context: .
+    command: ['yarn', 'start']
+    ports:
+      - 127.0.0.1:4000:4000
+    volumes:
+      - .:/app
+      # exclude folder from volume https://stackoverflow.com/questions/29181032/add-a-volume-to-docker-but-exclude-a-sub-folder
+      # - /app/node_modules
+
+    env_file: .env
+
+    environment:
+      # docker-compose rewrite .env variables like:
+      - DB_HOST=db
+
+    depends_on:
+      - db
+      - pgadmin
+
+  db:
+    image: postgres
+    restart: always
+    ports:
+      - '5432:5432'
+
+    environment:
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=root
+      - POSTGRES_DB=todo_db
+
+  # https://www.pgadmin.org/docs/pgadmin4/development/container_deployment.html
+  pgadmin:
+    image: dpage/pgadmin4
+    restart: always
+    ports:
+      - '5000:5000'
+
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=user@domain.com
+      - PGADMIN_DEFAULT_PASSWORD=root
+      - PGADMIN_LISTEN_PORT=5000

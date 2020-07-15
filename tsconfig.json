@@ -1,0 +1,19 @@
+{
+    "compilerOptions": {
+        "target": "es2017",
+        "module": "commonjs", 
+        "lib": [ "esnext" ],
+        "types": ["node"],
+        "moduleResolution": "node",
+        "emitDecoratorMetadata": true,
+        "experimentalDecorators": true,
+        "removeComments": false,
+        "noImplicitAny": true,
+        "sourceMap": true,
+        "rootDir": ".",
+        "outDir": "build",
+        "esModuleInterop": true
+    },
+    "exclude": [ "node_modules" ],
+    "include": [ "src/**/*" ]
+}

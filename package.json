@@ -1,0 +1,44 @@
+{
+  "name": "todo-api",
+  "version": "0.1.0",
+  "private": true,
+  "author": {
+    "name": "Pavel Ihm",
+    "url": "https://github.com/ihmpavel"
+  },
+  "scripts": {
+    "build": "rm -rf ./build && tsc -p ./",
+    "db-force-init-schema": "ts-node ./scripts/createDb",
+    "db-hard-init": "yarn db-force-init-schema && yarn db-load-data",
+    "db-load-data": "ts-node ./scripts/loadData",
+    "docker:start": "docker-compose up --build",
+    "docker:db-hard-init": "docker-compose run app yarn db-hard-init",
+    "docker:db-load-data": "docker-compose run app yarn db-load-data",
+    "docker:reset-containers": "docker-compose stop && docker-compose build && docker-compose rm --force",
+    "docker:rm": "docker-compose stop && docker-compose rm",
+    "l": "yarn run lint:fix",
+    "lint": "eslint \"src/**/*.{js,ts}\"",
+    "lint:fix": "eslint \"src/**/*.{js,ts}\" --fix",
+    "start": "ts-node-dev --respawn --transpile-only --ignore-watch node_modules src/main.ts"
+  },
+  "dependencies": {
+    "apollo-server": "^2.15.1",
+    "dotenv": "^8.2.0",
+    "graphql": "^15.3.0",
+    "pg": "^8.3.0",
+    "sequelize": "^6.3.3"
+  },
+  "devDependencies": {
+    "@types/pg": "^7.14.4",
+    "@types/validator": "^13.1.0",
+    "@typescript-eslint/eslint-plugin": "^3.6.1",
+    "@typescript-eslint/parser": "^3.6.1",
+    "eslint": "^7.4.0",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-plugin-prettier": "^3.1.4",
+    "eslint-plugin-sort-imports-es6-autofix": "^0.5.0",
+    "prettier": "^2.0.5",
+    "ts-node-dev": "^1.0.0-pre.51",
+    "typescript": "^3.9.6"
+  }
+}
